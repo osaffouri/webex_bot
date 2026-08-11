@@ -14,7 +14,8 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest>=3', ]
 
 extras_requirements = {
-    "proxy": ["websockets_proxy>=0.1.3"]
+    "proxy": ["websockets_proxy>=0.1.3"],
+    'scheduler': ['apscheduler>=3.10.0,<4.0.0'],
 }
 
 setup(

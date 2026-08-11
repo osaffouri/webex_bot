@@ -33,6 +33,7 @@ class WebexBot(WebexWebsocketClient):
                  allow_bot_to_bot=False,
                  help_command=None,
                  log_level="INFO",
+                 enable_scheduler=False,
                  proxies=None):
         """
         Initialise WebexBot.
