@@ -29,8 +29,5 @@ class BotScheduler:
             self.scheduler.shutdown()
 
     def __getattr__(self, name):
-        '''
-        Delegate unknown attributes/methods to the underlying BackgroundScheduler.
-        This allows direct access to all APScheduler methods like add_job(), add_cron_job(), etc.
-        '''
+        '''Delegate to the underlying BackgroundScheduler.'''
         return getattr(self.scheduler, name)
