@@ -95,6 +95,11 @@ class WebexBot(WebexWebsocketClient):
         self.bot_display_name = ""
         self.threads = threads
         self.allow_bot_to_bot = allow_bot_to_bot
+        
+        self.scheduler = None
+        if enable_scheduler:
+            from webex_bot.scheduler import BotScheduler
+            self.scheduler = BotScheduler(self)
 
     @backoff.on_exception(backoff.expo, requests.exceptions.ConnectionError)
     def get_me_info(self):
@@ -107,6 +112,20 @@ class WebexBot(WebexWebsocketClient):
         log.info(f"Running as {me.type} '{me.displayName}' with email {self.bot_email}")
         log.debug(f"Running as bot '{me}'")
         return me
+
+    def run(self):
+        """
+        Start the bot and its scheduler (if enabled).
+        Handles cleanup on exit.
+        """
+        if self.scheduler:
+            self.scheduler.start()
+        
+        try:
+            self._run_websocket()
+        finally:
+            if self.scheduler:
+                self.scheduler.stop()
 
     def add_command(self, command_class: Command):
         """
