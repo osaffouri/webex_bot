@@ -122,7 +122,7 @@ class WebexBot(WebexWebsocketClient):
             self.scheduler.start()
         
         try:
-            self._run_websocket()
+            super().run()
         finally:
             if self.scheduler:
                 self.scheduler.stop()
